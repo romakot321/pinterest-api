@@ -21,13 +21,10 @@ class TaskRepository[Table: Task, int](BaseRepository):
         return list(await self._get_list(page=page, count=count))
 
     async def get(self, model_id: UUID) -> Task:
-        return await self._get_one(
-            id=model_id,
-        )
+        return await self._get_one(id=model_id, select_in_load=Task.items)
 
     async def update(self, model_id: UUID, **fields) -> Task:
         return await self._update(model_id, **fields)
 
     async def delete(self, model_id: UUID):
         await self._delete(model_id)
-
